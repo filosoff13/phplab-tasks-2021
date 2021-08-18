@@ -7,16 +7,16 @@ class BasicsValidator implements BasicsValidatorInterface
 
     public function isMinutesException(int $minute): void
     {
-        // TODO: Implement isMinutesException() method.
+        throw new \InvalidArgumentException("invalid argument is:" . $minute);
     }
 
     public function isYearException(int $year): void
     {
-        // TODO: Implement isYearException() method.
+        throw new \InvalidArgumentException("input year is" . $year . "and it`s lower than 1900");
     }
 
     public function isValidStringException(string $input): void
     {
-        // TODO: Implement isValidStringException() method.
+        throw new \InvalidArgumentException("Input contains more then 6 digits");
     }
 }
