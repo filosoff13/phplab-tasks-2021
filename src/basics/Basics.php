@@ -17,7 +17,6 @@ class Basics implements BasicsInterface
             return "fourth";
         } else {
             (new BasicsValidator)->isMinutesException($minute);
-            //throw new InvalidArgumentException("invalid argument was:" . $minute);
         }
     }
 
