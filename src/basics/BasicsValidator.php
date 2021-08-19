@@ -5,6 +5,9 @@ namespace basics;
 class BasicsValidator implements BasicsValidatorInterface
 {
 
+    /**
+     * @param int $minute
+     */
     public function isMinutesException(int $minute): void
     {
         if ($minute < 0 || $minute > 60) {
@@ -12,6 +15,9 @@ class BasicsValidator implements BasicsValidatorInterface
         }
     }
 
+    /**
+     * @param int $year
+     */
     public function isYearException(int $year): void
     {
         if ($year < 1900){
@@ -19,6 +25,9 @@ class BasicsValidator implements BasicsValidatorInterface
         }
     }
 
+    /**
+     * @param string $input
+     */
     public function isValidStringException(string $input): void
     {
         $input_len = strlen($input);

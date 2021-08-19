@@ -7,11 +7,18 @@ class Basics implements BasicsInterface
 
     protected $validate;
 
-    public function __construct()
+    /**
+     * @param BasicsValidator $val
+     */
+    public function __construct(BasicsValidator $val)
     {
-        $this->validate = new BasicsValidator;
+        $this->validate = $val;
     }
 
+    /**
+     * @param int $minute
+     * @return string
+     */
     public function getMinuteQuarter(int $minute): string
     {
         $this->validate->isMinutesException($minute);
@@ -26,12 +33,20 @@ class Basics implements BasicsInterface
         }
     }
 
+    /**
+     * @param int $year
+     * @return bool
+     */
     public function isLeapYear(int $year): bool
     {
         $this->validate->isYearException($year);
         return ($year % 4 === 0 && $year % 100 !== 0) || $year % 400 === 0;
     }
 
+    /**
+     * @param string $input
+     * @return bool
+     */
     public function isSumEqual(string $input): bool
     {
         $this->validate->isValidStringException($input);
@@ -47,6 +62,6 @@ class Basics implements BasicsInterface
                 $sum2 += $arr[$i];
             }
         }
-        return ($sum1 === $sum2);
+        return $sum1 === $sum2;
     }
 }
