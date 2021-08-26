@@ -19,6 +19,8 @@
 
 namespace functions;
 
+use InvalidArgumentException;
+
 class Functions
 {
     /**
@@ -53,12 +55,14 @@ class Functions
      *
      * @param $arg
      * @return string
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function sayHelloArgumentWrapper($arg): string
     {
         // put your code here
-
+        if (!is_numeric($arg) || !is_string($arg) || !is_bool($arg)){
+            throw  new InvalidArgumentException('Not valid argument. Try use arg. type: number, string or bool');
+        }
         return $this->sayHelloArgument($arg);
     }
 
@@ -87,10 +91,17 @@ class Functions
      * @see https://www.php.net/manual/en/migration56.new-features.php#migration56.new-features.splat
      *
      * @return array
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    public function countArgumentsWrapper(): array
+    public function countArgumentsWrapper(...$arg): array
     {
         // put your code here
+        foreach ($arg as $iValue) {
+            if (!is_string($iValue)) {
+                throw new InvalidArgumentException("$iValue is not string,You need to pass string Argument");
+            }
+        }
+
+        return $this->countArguments($arg);
     }
 }
