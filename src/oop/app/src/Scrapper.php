@@ -11,22 +11,41 @@
 namespace src\oop\app\src;
 
 use src\oop\app\src\Parsers\FilmixParserStrategy;
+use src\oop\app\src\Parsers\KinoukrDomCrawlerParserAdapter;
 use src\oop\app\src\Transporters\CurlStrategy;
+use src\oop\app\src\Models\Movie;
+use src\oop\app\src\Transporters\GuzzleAdapter;
 
 class Scrapper
 {
 
     protected $url;
     protected $siteContent;
+    protected $content;
+    protected $parseContent;
 
-    public function __constract(CurlStrategy $curlStrategy, FilmixParserStrategy $filmixParserStrategy)
+    /**
+     * @param CurlStrategy|GuzzleAdapter $content
+     * @param FilmixParserStrategy|KinoukrDomCrawlerParserAdapter $parseContent
+     */
+    public function  __construct(CurlStrategy $content, FilmixParserStrategy $parseContent)
     {
-        $curlStrategy->getContent();
+        $this->content = $content;
+        $this->parseContent = $parseContent;
     }
 
-
-    public function getMovie()
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getMovie($url): Movie
     {
-        return new Movie();
+        $this->content->getContent($url);
+
+//        $movie = new Movie($this->parseContent->parseContent($this->siteContent));
+//        $movie->setTitle();
+//        $movie->setDescription();
+//        $movie->setPoster();
+
+        return new Movie($this->parseContent->parseContent($this->siteContent));
     }
 }

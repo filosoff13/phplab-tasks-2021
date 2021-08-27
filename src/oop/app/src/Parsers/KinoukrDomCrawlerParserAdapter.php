@@ -2,6 +2,8 @@
 
 namespace src\oop\app\src\Parsers;
 
+use Symfony\Component\DomCrawler\Crawler;
+
 class KinoukrDomCrawlerParserAdapter implements ParserInterface
 {
 
@@ -35,6 +37,23 @@ class KinoukrDomCrawlerParserAdapter implements ParserInterface
 
     public function parseContent(string $siteContent)
     {
-        // TODO: Implement parseContent() method.
+        $crawler = new Crawler($siteContent);
+
+        foreach ($crawler as $domElement) {
+            switch ($domElement->nodeName)
+            {
+                case 'title': $this->title = $domElement->nodeValue;
+                break;
+                case 'poster': $this->poster = $domElement->nodeValue;
+                break;
+                case 'description': $this->description = $domElement->nodeValue;
+                break;
+                default:
+                    $this->title = $domElement->nodeValue;
+            }
+
+            //$this->title = $domElement->nodeValue;
+        }
+
     }
 }

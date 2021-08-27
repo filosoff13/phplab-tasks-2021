@@ -5,33 +5,43 @@ namespace src\oop\app\src\Models;
 class Movie implements MovieInterface
 {
 
+    protected $parseContent;
+    protected $title;
+    protected $poster;
+    protected $description;
+
+    public function __construct($parseContent)
+    {
+        $this->parseContent = $parseContent;
+    }
+
     public function getTitle(): string
     {
-        // TODO: Implement getTitle() method.
+        return $this->title;
     }
 
     public function setTitle(string $title): void
     {
-        // TODO: Implement setTitle() method.
+        $this->title = $title;
     }
 
     public function getPoster(): string
     {
-        // TODO: Implement getPoster() method.
+        return $this->poster;
     }
 
     public function setPoster(string $poster): void
     {
-        // TODO: Implement setPoster() method.
+        $this->poster = $poster;
     }
 
     public function getDescription(): string
     {
-        // TODO: Implement getDescription() method.
+        return $this->description;
     }
 
     public function setDescription(string $description): void
     {
-        // TODO: Implement setDescription() method.
+        $this->description = $description;
     }
 }

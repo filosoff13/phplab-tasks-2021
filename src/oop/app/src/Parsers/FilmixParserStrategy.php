@@ -36,5 +36,8 @@ class FilmixParserStrategy implements ParserInterface
     public function parseContent(string $siteContent)
     {
         // TODO: Implement parseContent() method.
+
+        //set & return title, desc. and poster
+
     }
 }
