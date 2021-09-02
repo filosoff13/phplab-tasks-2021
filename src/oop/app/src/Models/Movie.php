@@ -5,14 +5,20 @@ namespace src\oop\app\src\Models;
 class Movie implements MovieInterface
 {
 
-    protected $parseContent;
-    protected $title;
-    protected $poster;
-    protected $description;
+    protected string $title;
+    protected string $poster;
+    protected string $description;
 
-    public function __construct($parseContent)
+    /**
+     * @param string $title
+     * @param string $poster
+     * @param string $description
+     */
+    public function __construct(string $title, string $poster, string $description)
     {
-        $this->parseContent = $parseContent;
+        $this->setTitle($title);
+        $this->setPoster($poster);
+        $this->setDescription($description);
     }
 
     public function getTitle(): string

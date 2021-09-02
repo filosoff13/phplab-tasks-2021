@@ -2,58 +2,24 @@
 
 namespace src\oop\app\src\Parsers;
 
+use src\oop\app\src\Models\Movie;
 use Symfony\Component\DomCrawler\Crawler;
 
 class KinoukrDomCrawlerParserAdapter implements ParserInterface
 {
 
-    protected $title;
-    protected $poster;
-    protected $description;
-
-    /**
-     * @return mixed
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPoster()
-    {
-        return $this->poster;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    public function parseContent(string $siteContent)
+    public function parseContent(string $siteContent): Movie
     {
         $crawler = new Crawler($siteContent);
 
-        foreach ($crawler as $domElement) {
-            switch ($domElement->nodeName)
-            {
-                case 'title': $this->title = $domElement->nodeValue;
-                break;
-                case 'poster': $this->poster = $domElement->nodeValue;
-                break;
-                case 'description': $this->description = $domElement->nodeValue;
-                break;
-                default:
-                    $this->title = $domElement->nodeValue;
-            }
+        $title = $crawler->filter('h1')->text();
+        $poster = $crawler->filter('.fposter > a')->attr('href');
+        $description = str_replace(
+            "<h2>" . $crawler->filter('.fdesc.full-text h2')->text() . "</h2>",
+            '',
+            $crawler->filter('.fdesc.full-text')->html()
+        );
 
-            //$this->title = $domElement->nodeValue;
-        }
-
+        return new Movie($title, $poster, $description);
     }
 }
