@@ -35,6 +35,10 @@ class KinoukrDomCrawlerParserAdapter implements ParserInterface
         return $this->description;
     }
 
+    /**
+     * @param string $siteContent
+     * @return mixed|void
+     */
     public function parseContent(string $siteContent)
     {
         $crawler = new Crawler($siteContent);
