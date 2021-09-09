@@ -2,8 +2,6 @@
 
 namespace src\oop\app\src\Parsers;
 
-use Exception;
-use src\oop\app\src\Models\Movie;
 
 class FilmixParserStrategy implements ParserInterface
 {
@@ -36,27 +34,31 @@ class FilmixParserStrategy implements ParserInterface
         return $this->description;
     }
 
-    public function parseContent(string $siteContent): Movie
+    /**
+     * @param string $siteContent
+     * @return array
+     */
+    public function parseContent(string $siteContent): array
     {
-        $data = [];
+        $siteContent = mb_convert_encoding($siteContent, "utf-8", "windows-1251");
+        $pattern = '/(?:<a\sclass="fancybox"(?:[A-z0-9="\s])+href=")([A-z0-9:\/\-\.]+)(?:">)/';
+        $aboutMovie['poster'] = $this->getContent($pattern, $siteContent);
+        $pattern = '/(?:<h1\sclass="name"[A-z0-9="\s]+>)(.+)(?:<\/h1>)/uU';
+        $aboutMovie['title']= $this->getContent($pattern, $siteContent);
+        $pattern = '/(?:<div\sclass="full-story">)(.+)(?:<\/div>)/uU';
+        $aboutMovie['description'] = $this->getContent($pattern, $siteContent);
 
-        $patterns = [
-            'title'       => '/<h1 class="name" itemprop="name">(.*?)<\/h1>/si',
-            'poster'      => '/<meta property=\"og:image" content="(.*?)" \/>/si',
-            'description' => '/<div class="full-story">(.*?)<\/div>/si',
-        ];
+        return $aboutMovie;
+    }
 
-        foreach ($patterns as $key => $pattern) {
-            preg_match($pattern, $siteContent, $matches);
-
-            if (!isset($matches) || !$matches[1]) {
-                throw new Exception("An error occurred when we tried to parse '$key'");
-            }
-
-            $data[$key] = $matches[1];
-        }
-
-        return new Movie($data['title'], $data['poster'], $data['description']);
-
+    /**
+     * @param string $pattern
+     * @param string $subject
+     * @return string
+     */
+    public function getContent(string $pattern, string $subject): string
+    {
+        preg_match($pattern, $subject, $matches);
+        return $matches[1];
     }
 }

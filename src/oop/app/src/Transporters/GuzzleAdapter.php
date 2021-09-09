@@ -6,7 +6,6 @@ use GuzzleHttp;
 
 class GuzzleAdapter implements TransportInterface
 {
-
     /**
      * @param string $url
      * @return string

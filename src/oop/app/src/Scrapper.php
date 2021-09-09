@@ -16,7 +16,6 @@ use src\oop\app\src\Transporters\TransportInterface;
 
 class Scrapper
 {
-
     private TransportInterface $transporter;
     private ParserInterface $parser;
 
@@ -31,12 +30,14 @@ class Scrapper
     }
 
     /**
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param string $url
+     * @return Movie
      */
-    public function getMovie($url): Movie
+    public function getMovie(string $url): Movie
     {
-        $this->content->getContent($url);;
+        $siteContent = $this->transporter->getContent($url);
+        $aboutMovie = $this->parser->parseContent($siteContent);
 
-        return $this->parser->parseContent($this->transporter->getContent($url));
+        return new Movie($aboutMovie['title'], $aboutMovie['poster'], $aboutMovie['description']);
     }
 }

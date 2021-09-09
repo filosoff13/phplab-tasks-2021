@@ -2,24 +2,23 @@
 
 namespace src\oop\app\src\Parsers;
 
-use src\oop\app\src\Models\Movie;
 use Symfony\Component\DomCrawler\Crawler;
 
-class KinoukrDomCrawlerParserAdapter implements ParserInterface
+class KinoukrDomCrawlerParserAdapter extends Crawler implements ParserInterface
 {
-
-    public function parseContent(string $siteContent): Movie
+    /**
+     * @param string $siteContent
+     * @return array
+     */
+    public function parseContent(string $siteContent): array
     {
-        $crawler = new Crawler($siteContent);
+        $this->add($siteContent);
+        $aboutMovie['poster'] = $this->filter('.fcols a')->eq(0)->attr('href');
+        $aboutMovie['title'] = $this->filter('h1')->eq(0)->text();
+        $descriptionHTML = $this->filter('.fdesc')->html();
+        $descriptionHTML = explode("</h2>", $descriptionHTML);
+        $aboutMovie['description'] = $descriptionHTML[1];
 
-        $title = $crawler->filter('h1')->text();
-        $poster = $crawler->filter('.fposter > a')->attr('href');
-        $description = str_replace(
-            "<h2>" . $crawler->filter('.fdesc.full-text h2')->text() . "</h2>",
-            '',
-            $crawler->filter('.fdesc.full-text')->html()
-        );
-
-        return new Movie($title, $poster, $description);
+        return $aboutMovie;
     }
 }
