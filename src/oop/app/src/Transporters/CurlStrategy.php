@@ -15,9 +15,9 @@ class CurlStrategy implements TransportInterface
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
         curl_setopt($ch, CURLOPT_ENCODING, "");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        $head = curl_exec($ch);
+        $result = curl_exec($ch);
 
         curl_close($ch);
-        return $head;
+        return $result;
     }
 }
