@@ -43,7 +43,7 @@ if (in_array($sortBy, $sortedFields, true)) {
  * and apply pagination logic
  * (see Pagination task below)
  */
-$per_page = 5;
+$per_page = 20;
 $offset = $_GET['page'] ? ($_GET['page'] * 5) - 1 : 0;
 $count_pages = count($airports) / $per_page;
 if (count($airports) % $per_page === 0) {
