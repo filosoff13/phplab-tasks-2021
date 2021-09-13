@@ -16,9 +16,9 @@ class Movie implements MovieInterface
      */
     public function __construct(string $title, string $poster, string $description)
     {
-        $this->setTitle($title);
-        $this->setPoster($poster);
-        $this->setDescription($description);
+        $this->title = $title;
+        $this->poster = $poster;
+        $this->description = $description;
     }
 
     public function getTitle(): string
