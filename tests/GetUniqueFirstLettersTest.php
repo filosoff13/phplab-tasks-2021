@@ -2,6 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 
+require_once '../src/web/functions.php';
+
 class GetUniqueFirstLettersTest extends TestCase
 {
     public function testPositive(array $input, array $expected): void
