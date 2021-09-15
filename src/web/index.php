@@ -10,13 +10,15 @@ $airports = require './airports.php';
  * (see Filtering tasks 1 and 2 below)
  */
 if (filterByLetterValidator()) {
-    $airports = array_filter($airports, static fn ($airport) =>
-        $airport['name'][0] === $_GET['filter_by_first_letter']);
+    $airports = array_filter($airports, static function ($airport) {
+        return $airport['name'][0] === $_GET['filter_by_first_letter'];
+    });
 }
 
 if (filterByStateValidator()) {
-    $airports = array_filter($airports, static fn ($airport) =>
-        $airport['state'] === $_GET['filter_by_state']);
+    $airports = array_filter($airports, static function ($airport) {
+        return $airport['state'] === $_GET['filter_by_state'];
+    });
 }
 
 // Sorting

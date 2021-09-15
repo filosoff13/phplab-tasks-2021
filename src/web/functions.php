@@ -13,10 +13,12 @@ function getUniqueFirstLetters(array $airports): array
 {
     $firstLetters = array();
     foreach ($airports as $airport) {
-        if (!isset($airport['name'])) {
-            throw new InvalidArgumentException('Input array must have a "name" key');
+        try
+        {
+            $firstLetters[] = $airport['name'][0];
+        } catch ( InvalidArgumentException $ex) {
+            echo 'Input array must have a "name" key';
         }
-        $firstLetters[] = $airport['name'][0];
     }
     $firstLetters =  array_unique($firstLetters);
     sort($firstLetters);
